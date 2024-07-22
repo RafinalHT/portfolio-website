@@ -1,11 +1,17 @@
 import React from 'react';
+import {useSpring, animated} from '@react-spring/web';
+import { useInView } from 'react-intersection-observer';
 import profilePic from '../media/profile-pic.jpg';
 import githubLogo from '../media/github.png';
 import linkedinLogo from '../media/linkedin.png';
 import emailLogo from '../media/mail.png';
 
 const About = () => {
+  const [ref, inView] = useInView({ trigger: true, threshold: 0.1 });
+  const fadeIn = useSpring({ opacity: inView ? 1 : 0, transform: inView ? 'translateX(0)' : 'translateX(-100px)' });
+
   return (
+    <animated.section ref={ref} style={fadeIn} id="about">
     <section id="about">
       <h2>About Me</h2>
       <div className="about-container">
@@ -14,7 +20,7 @@ const About = () => {
         </div>
         <div className="about-text">
           <p>
-          A highly motivated computer science student with a strong passion for cloud computing. 
+          A highly motivated computer science student with a strong passion for software engineering. 
           I am constantly eager to learn and explore new technologies. 
           Moreover, I possess good problem-solving skills along with critical thinking abilities, adaptability, and an unwavering drive for excellence.
           </p>
@@ -44,6 +50,7 @@ const About = () => {
         </ul>
       </div>
     </section>
+    </animated.section>
   );
 };
 
